@@ -1,7 +1,7 @@
 import React from 'react'
 import SyntaxHighlighter, { registerLanguage } from 'react-syntax-highlighter/dist/light'
 import Octicon from 'react-octicon'
-import RouterLink from 'react-router/Link'
+import { Link as RouterLink } from 'react-router'
 
 import css from './MarkdownTypes.scss'
 import theme from 'react-syntax-highlighter/dist/styles/tomorrow'

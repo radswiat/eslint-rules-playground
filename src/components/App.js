@@ -2,7 +2,7 @@ import React from 'react'
 import Flex from 'flex-component'
 import SimpleInput from 'react-simple-input'
 import Switch from 'react-flexible-switch'
-import Match from 'react-router/Match'
+import { BrowserRouter as Router, Route} from 'react-router-dom'
 import Octicon from 'react-octicon'
 
 import Editor from 'components/Editor/Editor'
@@ -11,12 +11,11 @@ import GithubBadge from 'components/GithubBadge/GithubBadge'
 
 import css from './App.scss'
 
+// console.warn(Match)
+
 export const Container = ({ children }) => (
   <Flex direction='column' className={css.app}>
     {children}
-    <GithubBadge href='//github.com/brumm/eslint-rules-playground' target='_blank' >
-      <Octicon name='mark-github' style={{ fontSize: 20 }} />
-    </GithubBadge>
   </Flex>
 )
 
@@ -74,72 +73,74 @@ class App extends React.Component {
     }
 
     return (
-      <Container>
-
-        <Flex shrink={0} className={css.header}>
-          <Flex
-            justifyContent='center'
-            className={css.toggleContainer}
-            alignItems='center'
-          >
-            {/* <img src='http://eslint.org/img/logo.svg' className={css.logo} /> */}
-
-            <div onClick={() => this.setState({ showEditor: true })}>Example Code</div>
-            <Switch
-              value={!showEditor}
-              circleStyles={{ diameter: 15, onColor: '#4B32C3', offColor: '#4B32C3' }}
-              switchStyles={{ width: 35, padding: 3, borderColor: '#DDDDDD', margin: '0 20px' }}
-              onChange={showEditor => this.setState({ showEditor: !showEditor })}
+      <Router>
+        <Container>
+          <Flex shrink={0} className={css.header}>
+            <Flex
+              justifyContent='center'
+              className={css.toggleContainer}
+              alignItems='center'
+            >
+              <div onClick={() => this.setState({ showEditor: true })}>Example Code</div>
+              <Switch
+                value={!showEditor}
+                circleStyles={{ diameter: 15, onColor: '#4B32C3', offColor: '#4B32C3' }}
+                switchStyles={{ width: 35, padding: 3, borderColor: '#DDDDDD', margin: '0 20px' }}
+                onChange={showEditor => this.setState({ showEditor: !showEditor })}
+              />
+              <div onClick={() => this.setState({ showEditor: false })}>Eslint Config</div>
+            </Flex>
+            <SimpleInput
+              clearButton
+              changeTimeout={200}
+              classNameContainer={css.searchContainer}
+              className={css.search}
+              placeholder='Filter...'
+              defaultValue={this.state.filterText}
+              onChange={({ target: { value: filterText }}) => this.setState({ filterText })}
+              type='text'
             />
-            <div onClick={() => this.setState({ showEditor: false })}>Eslint Config</div>
           </Flex>
 
-          <SimpleInput
-            clearButton
-            changeTimeout={200}
-            classNameContainer={css.searchContainer}
-            className={css.search}
-            placeholder='Filter...'
-            defaultValue={this.state.filterText}
-            onChange={({ target: { value: filterText }}) => this.setState({ filterText })}
-            type='text'
-          />
-        </Flex>
-
-        <Flex>
-          {showEditor ? (
-            <Editor
-              shouldLint
-              value={this.state.editorValue}
-              onChange={this.updateCode}
-              activeRuleConfig={activeRuleConfig}
-              activeLinterConfig={activeLinterConfig}
-            />
-          ) : (
-            <Editor
-              value={JSON.stringify(activeRuleConfig, null, '  ')}
-              options={{
-                lineNumbers: false,
-                readOnly: true
-              }}
-            />
-          )}
-
-            <Flex className={css.rules} direction='column'>
-              <Match exactly pattern='/:ruleId?' render={({ params: { ruleId = undefined }}) => (
-                <RulesContainer
-                  expandedId={ruleId}
-                  ruleDefinitions={ruleDefinitions}
-                  activeRuleConfig={activeRuleConfig}
-                  filterText={this.state.filterText}
-                  onToggleRule={this.onToggleRule}
-                  setCode={this.updateCode}
-                />
-              )} />
-            </Flex>
-          )} />
-        </Flex>
-      </Container>
+          <Flex>
+            {showEditor ? (
+              <Editor
+                shouldLint
+                value={this.state.editorValue}
+                onChange={this.updateCode}
+                activeRuleConfig={activeRuleConfig}
+                activeLinterConfig={activeLinterConfig}
+              />
+            ) : (
+              <Editor
+                value={JSON.stringify(activeRuleConfig, null, '  ')}
+                options={{
+                  lineNumbers: false,
+                  readOnly: true
+                }}
+              />
+            )}
+              <Flex className={css.rules} direction='column'>
+                <Route path='/:ruleId?' render={(params) => {
+                  console.warn('yea!!!!')
+                  console.log(params)
+                  const ruleId = params.match.params.ruleId
+                  return (
+                    <RulesContainer
+                      expandedId={ruleId}
+                      ruleDefinitions={ruleDefinitions}
+                      activeRuleConfig={activeRuleConfig}
+                      filterText={this.state.filterText}
+                      onToggleRule={this.onToggleRule}
+                      setCode={this.updateCode}
+                    />
+                  )
+                }} />
+              </Flex>
+            )} />
+          </Flex>
+        </Container>
+      </Router>
     )
   }
 }

@@ -2,11 +2,11 @@ import React from 'react'
 import CodeMirror from 'react-codemirror'
 import isEqual from 'lodash/isEqual'
 
-import 'react-codemirror/node_modules/codemirror/mode/jsx/jsx'
-import 'react-codemirror/node_modules/codemirror/lib/codemirror.css'
+import 'codemirror/mode/jsx/jsx'
+import 'codemirror/lib/codemirror.css'
 
-import 'react-codemirror/node_modules/codemirror/addon/lint/lint.css'
-import 'react-codemirror/node_modules/codemirror/addon/lint/lint'
+import 'codemirror/addon/lint/lint.css'
+import 'codemirror/addon/lint/lint'
 
 import css from './Editor.scss'
 

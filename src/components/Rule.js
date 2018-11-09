@@ -5,7 +5,7 @@ import Pinky from 'react-pinky-promise'
 import ReactMarkdown from 'react-markdown'
 import Octicon from 'react-octicon'
 import { MoonLoader } from 'halogen'
-import Link from 'react-router/Link'
+import { Link } from 'react-router-dom'
 
 import Editor from 'components/Editor/Editor'
 import * as MarkdownTypes from 'components/MarkdownTypes/MarkdownTypes.js'

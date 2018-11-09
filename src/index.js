@@ -5,7 +5,7 @@ import { render } from 'react-dom'
 import Pinky from 'react-pinky-promise'
 import Flex from 'flex-component'
 import { MoonLoader } from 'halogen'
-import Router from 'react-router/BrowserRouter'
+import { BrowserRouter as Router } from 'react-router-dom'
 
 import App, { Container } from 'components/App'
 import mockPromise from 'mock'

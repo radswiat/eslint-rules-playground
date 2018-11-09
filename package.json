@@ -27,7 +27,8 @@
     "react-markdown": "^2.4.2",
     "react-octicon": "^2.0.0",
     "react-pinky-promise": "^1.0.3",
-    "react-router": "^4.0.0-2",
+    "react-router": "^4.3.1",
+    "react-router-dom": "^4.3.1",
     "react-simple-input": "^0.3.1",
     "react-syntax-highlighter": "^3.0.2"
   },
