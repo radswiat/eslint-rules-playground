@@ -11,8 +11,6 @@ import GithubBadge from 'components/GithubBadge/GithubBadge'
 
 import css from './App.scss'
 
-// console.warn(Match)
-
 export const Container = ({ children }) => (
   <Flex direction='column' className={css.app}>
     {children}
@@ -122,8 +120,6 @@ class App extends React.Component {
             )}
               <Flex className={css.rules} direction='column'>
                 <Route path='/:ruleId?' render={(params) => {
-                  console.warn('yea!!!!')
-                  console.log(params)
                   const ruleId = params.match.params.ruleId
                   return (
                     <RulesContainer

@@ -8,17 +8,20 @@ import { MoonLoader } from 'halogen'
 import { BrowserRouter as Router } from 'react-router-dom'
 
 import App, { Container } from 'components/App'
-import mockPromise from 'mock'
+import eslintConfig from './eslint-rules/base'
+import eslintDefaultRules from './eslint-rules/rules-default'
+import eslintAirbnbBaseRules from './eslint-rules/rules-eslint-base'
+
+// apply default rules
+eslintConfig[0].rules = eslintDefaultRules
 
 const fetchJSON = url => fetch(url).then(response => response.json())
 const isDev = process.env.NODE_ENV === 'development'
 
-const fetchPromise = isDev
-  ? mockPromise
-  : Promise.all([
-    fetchJSON('https://runkit.io/brumm/serve-eslint-rules-fixed/branches/master/defaults'),
-    fetchJSON('https://runkit.io/brumm/serve-eslint-rules-fixed/branches/master/rules'),
-  ])
+const fetchPromise = Promise.all([
+  eslintConfig[0],
+  eslintConfig[1]
+])
 
 render(
   <Router>

@@ -1,6 +1,17 @@
 # eslint-rules-playground
 
-Demo: [eslint-playground.surge.sh/no-unused-vars](http://eslint-playground.surge.sh/no-unused-vars)
-Runkit.io backend: [serve-eslint-rules](https://runkit.com/brumm/serve-eslint-rules/2.0.0)
+Fixed eslint-rules-playground
 
-![](http://i.imgur.com/ajJ8osj.png)
+# How to extract eslint rules?
+
+```
+const airbnb = require('eslint-config-airbnb-base')
+const merge = require('lodash/merge')
+
+const all = {}
+airbnb.extends.map((rules) => {
+  const rule = require(rules)
+  merge(all, rule)
+})
+console.log(JSON.stringify(all, null, 2))
+```
